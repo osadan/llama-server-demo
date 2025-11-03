@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./init-scripts/init-ollama.sh:/init-ollama.sh:ro
+    entrypoint: ["/init-ollama.sh"]
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+
